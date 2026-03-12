@@ -23,5 +23,6 @@ jobs:
             command -v bun
             cd ${{ secrets.DEPLOY_PATH }}
             git pull
+            bun upgrade
             bun install --frozen-lockfile
             pm2 restart luna-bot
