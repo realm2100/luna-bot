@@ -1,0 +1,27 @@
+# luna-bot
+
+To install dependencies:
+
+```bash
+bun install
+```
+
+To run:
+
+```bash
+bun run start
+```
+
+To generate a migration after changing the schema:
+
+```bash
+bun run db:generate
+```
+
+To apply migrations manually:
+
+```bash
+bun run db:migrate
+```
+
+This project was created using `bun init` in bun v1.3.6. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
