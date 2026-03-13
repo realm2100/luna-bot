@@ -6,7 +6,6 @@ import {
 import db from "@/db/db";
 import events from "@/events/events";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
-import { uploadCommands } from "@/commands/commands";
 
 migrate(db, {
   migrationsFolder: "drizzle",
@@ -17,12 +16,11 @@ const client = new Client({
 });
 
 client.once(Events.ClientReady, (readyClient) => {
-  events.clientReady(readyClient);
-  void uploadCommands(client);
+  void events.clientReady(readyClient);
 });
 
 client.on(Events.InteractionCreate, (interaction) => {
-  events.interactionCreate(interaction);
+  void events.interactionCreate(interaction);
 });
 
 try {
