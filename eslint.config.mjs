@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import codeComplete from "eslint-plugin-code-complete";
 import deMorgan from "eslint-plugin-de-morgan";
@@ -100,7 +99,6 @@ export default [
 
       "code-complete/no-boolean-params": "warn",
 
-      "complexity": ["warn", 10],
       "curly": ["warn", "all"],
       "eqeqeq": ["error", "always"],
       "import-newlines/enforce": ["warn", {
