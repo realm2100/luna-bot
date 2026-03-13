@@ -12,16 +12,9 @@ To run:
 bun run start
 ```
 
-To generate a migration after changing the schema:
-
+To generate a migration after changing the schema (`bun run start` automatically does this):
 ```bash
 bun run db:generate
-```
-
-To apply migrations manually:
-
-```bash
-bun run db:migrate
 ```
 
 This project was created using `bun init` in bun v1.3.6. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
