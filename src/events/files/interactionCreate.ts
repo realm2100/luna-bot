@@ -1,16 +1,24 @@
 import commands from "@/commands/commands";
 import { type Interaction } from "discord.js";
+import logger from "@/utils/logger";
 
 function commandExists(commandName: string): commandName is keyof typeof commands {
   return Object.hasOwn(commands, commandName);
 }
 
-function interactionCreate(interaction: Interaction) {
+async function interactionCreate(interaction: Interaction) {
   if (interaction.isChatInputCommand()) {
     if (!commandExists(interaction.commandName)) {
       return;
     }
-    void commands[interaction.commandName].chatInput?.(interaction);
+    try {
+      await commands[interaction.commandName].chatInput?.(interaction);
+    } catch (error) {
+      await logger(interaction.client, {
+        data: error instanceof Error ? error : new Error(String(error)),
+        type: "error",
+      });
+    }
     return;
   }
   if (interaction.isMessageComponent()) {
