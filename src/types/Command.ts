@@ -4,7 +4,7 @@ import {
   type AutocompleteInteraction,
   type ButtonInteraction,
   type ChatInputCommandInteraction,
-  type ContextMenuCommandInteraction,
+  type MessageContextMenuCommandInteraction,
   type ModalSubmitInteraction,
   type PermissionResolvable,
 } from "discord.js";
@@ -20,7 +20,7 @@ interface Command<T = unknown> {
   autocomplete?: (interaction: AutocompleteInteraction) => Promise<T>;
   button?: (interaction: ButtonInteraction) => Promise<T>;
   chatInput?: (interaction: ChatInputCommandInteraction) => Promise<T>;
-  contextMenu?: (interaction: ContextMenuCommandInteraction) => Promise<T>;
+  messageContextMenu?: (interaction: MessageContextMenuCommandInteraction) => Promise<T>;
   modalSubmit?: (interaction: ModalSubmitInteraction) => Promise<T>;
   selectMenu?: (interaction: AnySelectMenuInteraction) => Promise<T>;
 };
