@@ -21,6 +21,20 @@ async function interactionCreate(interaction: Interaction) {
     }
     return;
   }
+  if (interaction.isMessageContextMenuCommand()) {
+    if (!commandExists(interaction.commandName)) {
+      return;
+    }
+    try {
+      await commands[interaction.commandName].messageContextMenu?.(interaction);
+    } catch (error) {
+      await logger(interaction.client, {
+        data: error instanceof Error ? error : new Error(String(error)),
+        type: "error",
+      });
+    }
+    return;
+  }
   if (interaction.isMessageComponent()) {
     console.log(interaction.type);
     return;
