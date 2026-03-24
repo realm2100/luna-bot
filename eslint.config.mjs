@@ -169,6 +169,7 @@ export default [
         },
       ],
       "unicorn/prefer-module": "off",
+      "unicorn/prefer-ternary": "off",
       "unicorn/prevent-abbreviations": "off",
     },
   },
