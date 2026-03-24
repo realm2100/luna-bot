@@ -48,7 +48,7 @@ const sayCommand: Command = {
       throw new Error("DM에서 사용할 수 없는 명령어입니다.");
     }
     const message = await interaction.channel.send({
-      content: `익명: ${interaction.options.getString("내용", true)}`,
+      content: `${interaction.options.getString("내용", true)}`,
     });
     const anonymousMessageCreated = createAnonymousMessage(message, interaction.user);
     if (!anonymousMessageCreated) {
