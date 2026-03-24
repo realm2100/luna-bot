@@ -11,7 +11,7 @@ import { createAnonymousMessage } from "@/db/helpers";
 const sayCommand: Command = {
   data: {
     contexts: [InteractionContextType.Guild],
-    description: "현재 채널에 익명의 메시지를 보냅니다.",
+    description: "현재 채널에 익명의 메시지를 보냅니다. ///으로 줄바꿈하세요.",
     name: "say",
     options: [
       {
@@ -48,7 +48,7 @@ const sayCommand: Command = {
       throw new Error("DM에서 사용할 수 없는 명령어입니다.");
     }
     const message = await interaction.channel.send({
-      content: `${interaction.options.getString("내용", true)}`,
+      content: `${interaction.options.getString("내용", true).replaceAll("///", "\n")}`,
     });
     const anonymousMessageCreated = createAnonymousMessage(message, interaction.user);
     if (!anonymousMessageCreated) {
