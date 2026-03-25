@@ -1,6 +1,7 @@
 import {
   ApplicationCommandType,
   InteractionContextType,
+  MessageFlags,
 } from "discord.js";
 import Colors from "@/constants/colors";
 import type Command from "@/types/Command";
@@ -23,6 +24,7 @@ const pingCommand: Command = {
         description: `Latency: ${Date.now() - interaction.createdTimestamp}ms\nAPI Latency: ${interaction.client.ws.ping}ms`,
         title: "Pong!",
       }],
+      flags: MessageFlags.Ephemeral,
     });
   },
 };
