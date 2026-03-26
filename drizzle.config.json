@@ -1,9 +1,0 @@
-{
-  "$schema": "https://orm.drizzle.team/drizzle-kit-json-schema.json",
-  "dialect": "sqlite",
-  "schema": "./src/db/schema.ts",
-  "out": "./drizzle",
-  "dbCredentials": {
-    "url": "./db.sqlite"
-  }
-}
