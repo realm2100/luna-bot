@@ -61,7 +61,11 @@ const sayCommand: Command = {
     let message;
     if (interaction.guildId === process.env.APRIL_FOOLS_GUILD_ID) {
       message = await interaction.channel.send({
-        content: `${aprilFoolsUserList.length > 0 ? `@${randomInArray(aprilFoolsUserList)}: ` : ""}${interaction.options.getString("내용", true).replaceAll("///", "\n")}`,
+        embeds: [{
+          color: Math.floor(Math.random() * 0xFF_FF_FF),
+          description: `${aprilFoolsUserList.length > 0 ? `<@${randomInArray(aprilFoolsUserList)}>: ` : ""}${interaction.options.getString("내용", true).replaceAll("///", "\n")}`,
+          timestamp: new Date().toISOString(),
+        }],
       });
     } else {
       message = await interaction.channel.send({
