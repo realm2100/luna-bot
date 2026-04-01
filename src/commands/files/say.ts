@@ -8,6 +8,17 @@ import {
 import type Command from "@/types/Command";
 import { createAnonymousMessage } from "@/db/helpers";
 
+const aprilFoolsUserList = process.env.APRIL_FOOLS_USER_LIST?.split(",").map((id) => id.trim()) ?? [];
+
+function randomInArray<T>(arr: T[]): T {
+  const value = arr[Math.floor(Math.random() * arr.length)];
+  if (value === undefined) {
+    throw new Error("randomInArray failed to select an element");
+  }
+
+  return value;
+}
+
 const sayCommand: Command = {
   data: {
     contexts: [InteractionContextType.Guild],
@@ -47,9 +58,16 @@ const sayCommand: Command = {
     if (interaction.channel.isDMBased()) {
       throw new Error("DM에서 사용할 수 없는 명령어입니다.");
     }
-    const message = await interaction.channel.send({
-      content: `${interaction.options.getString("내용", true).replaceAll("///", "\n")}`,
-    });
+    let message;
+    if (interaction.guildId === process.env.APRIL_FOOLS_GUILD_ID) {
+      message = await interaction.channel.send({
+        content: `${aprilFoolsUserList.length > 0 ? `@${randomInArray(aprilFoolsUserList)}: ` : ""}${interaction.options.getString("내용", true).replaceAll("///", "\n")}`,
+      });
+    } else {
+      message = await interaction.channel.send({
+        content: `${interaction.options.getString("내용", true).replaceAll("///", "\n")}`,
+      });
+    }
     const anonymousMessageCreated = createAnonymousMessage(message, interaction.user);
     if (!anonymousMessageCreated) {
       await message.delete();
