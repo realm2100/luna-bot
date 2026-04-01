@@ -65,7 +65,7 @@ const sayCommand: Command = {
           color: Math.floor(Math.random() * 0xFF_FF_FF),
           description: `${aprilFoolsUserList.length > 0 ? `<@${randomInArray(aprilFoolsUserList)}>: ` : ""}${interaction.options.getString("내용", true).replaceAll("///", "\n")}`,
           footer: {
-            text: "(위 유저는 실제 작성자가 아닌 랜덤으로 선택된 유저입니다. 사칭은 나쁜거에요!)",
+            text: "위 유저는 실제 작성자가 아닌 랜덤으로 선택된 유저입니다",
           },
           timestamp: new Date().toISOString(),
         }],
