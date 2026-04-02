@@ -38,6 +38,9 @@ const evalCommand: Command = {
   },
 
   chatInput: async (interaction) => {
+    if (interaction.user.id !== process.env.BOT_AUTHOR) {
+      throw new Error("권한이 없습니다.");
+    }
     const code = interaction.options.getString("code")!;
 
     await interaction.deferReply({
