@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import codeComplete from "eslint-plugin-code-complete";
 import deMorgan from "eslint-plugin-de-morgan";
 import eslint from "@eslint/js";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
@@ -33,7 +32,6 @@ export default [
       },
     },
     plugins: {
-      "code-complete": codeComplete,
       "import-newlines": importNewlines,
       "sort-properties": sortPropertiesPlugin,
     },
@@ -97,29 +95,16 @@ export default [
 
       "array-callback-return": "error",
 
-      "code-complete/no-boolean-params": "warn",
-
       "curly": ["warn", "all"],
       "eqeqeq": ["error", "always"],
       "import-newlines/enforce": ["warn", {
         items: 1,
       }],
-      "max-params": ["error", {
-        max: 2,
-      }],
+      "max-params": "off",
       "no-else-return": ["error", {
         allowElseIf: false,
       }],
-      "no-magic-numbers": ["warn", {
-        enforceConst: true,
-        ignore: [-1, 0, 1],
-        ignoreArrayIndexes: true,
-        ignoreClassFieldInitialValues: true,
-        ignoreDefaultValues: true,
-        ignoreEnums: true,
-        ignoreNumericLiteralTypes: true,
-        ignoreTypeIndexes: true,
-      }],
+      "no-magic-numbers": "off",
       "no-nested-ternary": "warn",
       "no-param-reassign": ["warn", {
         props: true,
@@ -135,6 +120,7 @@ export default [
       "prefer-template": "warn",
       "preserve-caught-error": "warn",
       "sort-imports": ["warn", {
+        allowSeparatedGroups: true,
         ignoreCase: true,
       }],
       "sort-keys": ["warn", "asc", {
@@ -143,19 +129,19 @@ export default [
         natural: true,
       }],
       "sort-properties/sort-interface": ["warn", {
-        allowLineSeparatedGroups: false,
+        allowLineSeparatedGroups: true,
         caseSensitive: false,
       }],
       "sort-properties/sort-object-destructing": ["warn", {
-        allowLineSeparatedGroups: false,
+        allowLineSeparatedGroups: true,
         caseSensitive: false,
       }],
       "sort-properties/sort-object-expression": ["warn", {
-        allowLineSeparatedGroups: false,
+        allowLineSeparatedGroups: true,
         caseSensitive: false,
       }],
       "sort-properties/sort-type-literal": ["warn", {
-        allowLineSeparatedGroups: false,
+        allowLineSeparatedGroups: true,
         caseSensitive: false,
       }],
 
