@@ -10,11 +10,6 @@ import { anonymousMessagesSchema } from "@/db/schema";
 import db from "@/db/db";
 import { sql } from "drizzle-orm";
 
-function getNoisyCount(realCount: number) {
-  const noise = Math.floor(Math.random() * 11) - 5;
-  return Math.max(0, realCount + noise);
-}
-
 const rankingsCommand: Command = {
   data: {
     contexts: [InteractionContextType.Guild],
@@ -48,18 +43,15 @@ const rankingsCommand: Command = {
       .all();
     const noisedMessages = anonymousMessages.map((entry) => ({
       authorId: entry.authorId,
-      count: getNoisyCount(entry.count),
+      count: entry.count,
     }));
     const sortedMessages = noisedMessages.toSorted((a, b) => b.count - a.count);
     const top10 = sortedMessages.slice(0, 10);
-    const description = top10.map((entry, index) => `${index + 1}. <@${entry.authorId}> - ${entry.count}개`).join("\n") || "랭킹이 없습니다.";
+    const description = top10.map((entry, index) => `${index + 1}. <@${entry.authorId}>`).join("\n") || "랭킹이 없습니다.";
     await interaction.editReply({
       embeds: [{
         color: Colors.accent,
         description,
-        footer: {
-          text: "익명 메세지 작성자를 알아내는 것을 방지하기 위해 실제 개수에 노이즈를 추가해서 표시합니다.",
-        },
         title: "익명 메세지 랭킹",
       }],
     });
