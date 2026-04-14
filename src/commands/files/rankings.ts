@@ -7,8 +7,8 @@ import Colors from "@/constants/colors";
 import type Command from "@/types/Command";
 
 import { anonymousMessagesSchema } from "@/db/schema";
+import { count } from "drizzle-orm";
 import db from "@/db/db";
-import { sql } from "drizzle-orm";
 
 const rankingsCommand: Command = {
   data: {
@@ -34,25 +34,24 @@ const rankingsCommand: Command = {
     if (interaction.channel.isDMBased()) {
       throw new Error("DM에서 사용할 수 없는 명령어입니다.");
     }
+    const anonymousMessagesRows = db.select({
+      count: count(),
+    })
+      .from(anonymousMessagesSchema)
+      .all();
     const anonymousMessages = db.select({
       authorId: anonymousMessagesSchema.authorId,
-      count: sql<number>`count(*)`,
+      count: count(),
     })
       .from(anonymousMessagesSchema)
       .groupBy(anonymousMessagesSchema.authorId)
       .all();
-    const noisedMessages = anonymousMessages.map((entry) => ({
-      authorId: entry.authorId,
-      count: entry.count,
-    }));
-    const sortedMessages = noisedMessages.toSorted((a, b) => b.count - a.count);
-    const top10 = sortedMessages.slice(0, 10);
-    const description = top10.map((entry, index) => `${index + 1}. <@${entry.authorId}>`).join("\n") || "랭킹이 없습니다.";
+    const description = anonymousMessages.toSorted((a, b) => b.count - a.count).slice(0, 10).map((entry, index) => `${index + 1}. <@${entry.authorId}>`).join("\n") || "랭킹이 없습니다.";
     await interaction.editReply({
       embeds: [{
         color: Colors.accent,
         description,
-        title: "익명 메세지 랭킹",
+        title: `익명 메세지 랭킹 [${anonymousMessagesRows[0]?.count ?? "?"}개]`,
       }],
     });
   },
